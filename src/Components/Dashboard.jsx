@@ -7,19 +7,28 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const savedScores = JSON.parse(localStorage.getItem("quizScores") || "{}");
   const user = useSelector((state) => state.user.userData);
+
+const anoop = [
+  {stream : "Bio" , mark : savedScores.Bio },
+  {stream : "maths" , mark : savedScores.maths },
+  {stream : "commerce" , mark : savedScores.commerce },
+  {stream : "Arts" , mark : savedScores.arts },
+]
 
   const handleLogout = () => {
     dispatch(clearUser());
+     localStorage.clear();
     navigate("/login");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Navbar */}
+    
       <header className="bg-white shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-800">
-          Welcome, {user?.fullName || "User"} 👋
+          Welcome, {user?.fullName || "User"} 
         </h1>
         <div className="flex items-center gap-4">
           {user?.image ? (
@@ -52,9 +61,9 @@ user ?(<> <button
         </div>
       </header>
 
-      {/* Main Dashboard */}
+  
       <main className="flex-1 p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Profile Card */}
+       
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center">
           {user?.image ? (
             <img
@@ -72,7 +81,7 @@ user ?(<> <button
           <p className="text-gray-500 text-sm">Username: {user?.username}</p>
         </div>
 
-        {/* Class Card */}
+  
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition flex flex-col justify-center items-center">
           <div className="flex items-center gap-2 mb-2">
             <BookOpen className="w-6 h-6 text-green-600" />
@@ -83,26 +92,25 @@ user ?(<> <button
           </p>
         </div>
 
-        {/* Quiz Score Cards */}
-        {["Bio", "Maths", "Commerce", "Arts"].map((subject) => (
+         { anoop.map((subject) => (
           <div
             key={subject}
             className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition flex flex-col justify-center items-center"
           >
             <div className="flex items-center gap-2 mb-2">
               <BarChart2 className="w-6 h-6 text-blue-600" />
-              <h2 className="text-lg font-semibold">{subject} Score</h2>
+              <h2 className="text-lg font-semibold">{subject.stream} Score</h2>
             </div>
             <p className="text-gray-500 text-xl font-bold">
-              {user?.quizScores?.[subject] ?? "N/A"}%
+              {subject.mark}
             </p>
           </div>
         ))}
       </main>
 
-      {/* Footer */}
+
       <footer className="bg-white text-center p-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} YourAppName. All rights reserved.
+        © {new Date().getFullYear()} Saksham vidya. All rights reserved.
       </footer>
     </div>
   );

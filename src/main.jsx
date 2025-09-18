@@ -9,6 +9,9 @@ import { store } from './Store/Store.js'
 import { Provider } from 'react-redux'
 import CollegeTable from "./Components/Quiz.jsx"
 import Dashboard from './Components/Dashboard.jsx'
+import CollegeQuiz from './Components/Quiz.jsx'
+import CareerRecommendation from './Components/Gemini.jsx'
+import SidebarChat from './Components/Sidebar.jsx'
 
 const route = createBrowserRouter([
 {
@@ -33,7 +36,19 @@ children : [
   {
     path : "/dashboard" ,
     element : <Dashboard />
-  } 
+  } ,
+  {
+    path : "/quiz" ,
+    element : <CollegeQuiz />
+  } ,
+  {
+    path : "/chat" ,
+    element : <CareerRecommendation />
+  },
+  {
+    path : "/sidebarchat",
+    element : <SidebarChat />
+  }
 ]
 }
 

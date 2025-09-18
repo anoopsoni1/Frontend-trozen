@@ -1,10 +1,12 @@
 import React from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { FaFlask, FaRoad, FaUniversity, FaRegCalendarAlt, FaBullseye, FaBook } from 'react-icons/fa';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function Home() {
+  const navigate = useNavigate()
   const { t, i18n } = useTranslation();
-
+const user = useSelector((state) => state.user.userData);
   const features = [
     { id: 1, title: t("features.f1.title"), desc: t("features.f1.desc"), color: "bg-blue-100 text-blue-600" ,icons : <FaFlask size={24} className="text-blue-500" /> },
     { id: 2, title: t("features.f2.title"), desc: t("features.f2.desc"), color: "bg-teal-100 text-teal-600" ,icons : <FaRoad size={24} className="text-green-500" />},
@@ -20,7 +22,13 @@ function Home() {
     { value: "0%", label: "Success Rate" },
   ];
 
+  const navigation = ()=>{
+  navigate("/login")
+   }
 
+    const naviga = ()=>{
+      navigate("/quiz")
+    }
   const assessments = [
     { label: "Science Stream – Engineering, Medicine, Research", color: "bg-blue-100 text-blue-700 hover:bg-blue-200" },
     { label: "Commerce Stream – Business, Finance, Economics", color: "bg-green-100 text-green-700 hover:bg-green-200" },
@@ -37,19 +45,20 @@ function Home() {
         </div>
         <ul className="hidden md:flex space-x-6 text-gray-900">
           <li>{t("nav.home")}</li>
-          <li>{t("nav.quiz")}</li>
+          {user ? (<><Link to="/quiz">{t("nav.quiz")}</Link></>) : (<><Link to="/login">{t("nav.quiz")}</Link></>)}
+           
           <li>{t("nav.paths")}</li>
           <Link to="/collages">{t("nav.colleges")}</Link>
-          <li>{t("nav.dashboard")}</li>
+          <Link to="./dashboard">{t("nav.dashboard")}</Link>
         </ul>
-        <div className="space-x-3">
-          <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-700">
-            {t("nav.getstarted")}
-          </Link>
+        <div className="space-x-3 flex">
+         {user ? (<><img src={user.image} className="rounded-[30px] bg-amber-400 border-2 border-b-black" height={50} width={50} alt="" /></>):(<><Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-700">
+            {t("nav.getstarted")}</Link>
+          </>)} 
           <select
             value={i18n.language}
             onChange={(e) => i18n.changeLanguage(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded-2xl px-2 py-1"
           >
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
@@ -98,9 +107,12 @@ function Home() {
               </button>
             ))}
           </div>
-          <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700">
+          {user ? (<> <button onClick={naviga} className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700">
             Start Assessment
-          </button>
+          </button></>) : ( <button onClick={navigation} className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700">
+                  Start Assessment
+          </button>)}
+         
         </div>
       </section>
 
@@ -126,7 +138,7 @@ function Home() {
           </div>
         </div>
       </section>
-<header className="pt-10 pb-20 container mx-auto px-6 text-center ">
+    <header className="pt-10 pb-20 container mx-auto px-6 text-center ">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
           Ready to Discover Your <br />
           <span className="block">Perfect Career Path?</span>
@@ -180,7 +192,7 @@ function Home() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <div className=" text-white p-2 rounded-lg">🎓</div>
-            <h2 className="text-xl font-bold text-blue-600">CareerGuide</h2>
+            <h2 className="text-xl font-bold text-blue-600">Saksham Vidya</h2>
           </div>
           <p className="text-sm text-gray-600">
             Empowering students to make informed decisions about their
@@ -190,7 +202,7 @@ function Home() {
 
           <div className="mt-4 space-y-2 text-sm">
             <p className="flex items-center gap-2">
-              📧 support@careerguide.com
+              📧 support@sakshamvidya.com
             </p>
             <p className="flex items-center gap-2">
               📞 ‪+91 98765 43210‬
@@ -236,7 +248,7 @@ function Home() {
 
 
       <div className=" py-4 text-sm text-gray-500 flex flex-col md:flex-row items-center justify-between mx-auto px-6">
-        <p>© 2024 CareerGuide. All rights reserved.</p>
+        <p>© 2025 Saksham Vidya. All rights reserved.</p>
         <div className="flex gap-4 mt-2 md:mt-0">
           <a href="#">Terms of Service</a>
           <a href="#">Privacy Policy</a>
