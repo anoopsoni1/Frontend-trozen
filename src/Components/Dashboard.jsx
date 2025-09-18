@@ -27,7 +27,7 @@ const anoop = [
     <div className="min-h-screen bg-gray-100 flex flex-col">
     
       <header className="bg-white shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">
+        <h1 className=" sm:block text-xl font-bold text-gray-800 hidden">
           Welcome, {user?.fullName || "User"} 
         </h1>
         <Link to="/" className="hover:text-blue-600">Home</Link>
