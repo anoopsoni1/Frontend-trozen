@@ -111,7 +111,7 @@ const navigate = useNavigate()
         </div>
 
         
-        <div className="hidden md:flex md:w-1/2 bg-[url('./loginimg.png')] bg-cover  text-white p-10 flex-col justify-center">
+        <div className="hidden md:flex md:w-1/2 bg-[url('/loginimg.png')] bg-cover  text-white p-10 flex-col justify-center">
          
         </div>
       </div>

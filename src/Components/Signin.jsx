@@ -143,7 +143,7 @@ const handleSubmit = async (e) => {
         </form>
       </div>
 
-      <div className="hidden md:flex w-1/2 bg-[url('./login.png')] bg-cover bg-center" />
+      <div className="hidden md:flex w-1/2 bg-[url('/login.png')] bg-cover bg-center" />
     </div>
   );
 }

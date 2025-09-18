@@ -19,7 +19,10 @@ function Home() {
     { id: 5, title: t("features.f5.title"), desc: t("features.f5.desc"), color: "bg-sky-100 text-sky-600", icons: <FaBullseye size={24} className="text-red-500" /> },
     { id: 6, title: t("features.f6.title"), desc: t("features.f6.desc"), color: "bg-cyan-100 text-cyan-600", icons: <FaBook size={24} className="text-yellow-500" /> },
   ];
-
+ 
+   const anoop = [
+    {title : t("anoop.title")}
+   ]
   const stats = [
     { value: "00", label: t("stats.guided") },
     { value: "00", label: t("stats.paths") },
@@ -123,7 +126,7 @@ function Home() {
         <div className="mx-auto px-6">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-              <Trans i18nKey="features.title">
+              <Trans i18nKey="anoop.title">
                 Everything You Need for <span className="text-blue-600">Career Success</span>
               </Trans>
             </h2>
