@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SidebarChat from "./Sidebar";
 
+
 function Home() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -35,7 +36,7 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[url('./Bg.png')]">
+    <div  className="min-h-screen bg-[url('/Bg.png')]">
 
       <nav className="flex justify-between items-center mx-auto p-4">
         <div className="flex place-items-center">
