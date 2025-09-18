@@ -38,7 +38,7 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:7000/api/v1/user/register",
+      "https://backend-trozen.onrender.com/api/v1/user/register",
       data,
       { headers: { "Content-Type": "multipart/form-data" } }
     );

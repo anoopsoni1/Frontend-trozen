@@ -27,7 +27,7 @@ const SidebarChat = () => {
     ]);
 
     try {
-      const res = await fetch("http://localhost:7000/api/v1/user/bot", {
+      const res = await fetch("https://backend-trozen.onrender.com/api/v1/user/bot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userInput }),

@@ -40,7 +40,7 @@ const an =
 
     try {
       const res = await axios.post(
-        "http://localhost:7000/api/v1/user/chat",
+        "https://backend-trozen.onrender.com/api/v1/user/chat",
         formData
       );
 

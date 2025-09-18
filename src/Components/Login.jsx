@@ -23,7 +23,7 @@ const navigate = useNavigate()
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:7000/api/v1/user/login", {
+      const res = await axios.post("https://backend-trozen.onrender.com/api/v1/user/login", {
         username: formData.username,
         password: formData.password,
       });
