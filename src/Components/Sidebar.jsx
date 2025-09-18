@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 
 const SidebarChat = () => {
@@ -7,78 +5,96 @@ const SidebarChat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
-
-  // Load messages from localStorage
-  useEffect(() => {
-    const storedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-    setMessages(storedMessages);
-  }, []);
-
-  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Save messages
-  useEffect(() => {
-    localStorage.setItem("chatMessages", JSON.stringify(messages));
-  }, [messages]);
+
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage = { id: Date.now(), sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
+
+    const userInput = input; 
     setInput("");
 
+    const typingId = Date.now() + 1;
+    setMessages((prev) => [
+      ...prev,
+      { id: typingId, sender: "bot", text: "Typing..." },
+    ]);
+
     try {
-      const res = await fetch("http://localhost:7000/api/v1/user/chat", {
+      const res = await fetch("http://localhost:7000/api/v1/user/bot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ message: userInput }),
       });
+
+      if (!res.ok) throw new Error(`Network response was not ok: ${res.status}`);
 
       const data = await res.json();
 
+      const botText =
+        data?.data?.text ||
+        data?.answer ||
+        data?.text ||
+        data?.output ||
+        JSON.stringify(data);
+
       const botMessage = {
-        id: Date.now() + 1,
+        id: Date.now() + 2,
         sender: "bot",
-        text: data.success ? data.answer : "Sorry, something went wrong.",
+        text: botText,
       };
 
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) =>
+        prev.map((msg) => (msg.id === typingId ? botMessage : msg))
+      );
     } catch (err) {
-      console.error(err);
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now() + 2, sender: "bot", text: "Error connecting to AI." },
-      ]);
+      console.error("Fetch error:", err);
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === typingId
+            ? { id: typingId, sender: "bot", text: "Error connecting to AI." }
+            : msg
+        )
+      );
     }
   };
 
   return (
-    <div>
-      {/* Toggle Button */}
+    <>
+    
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 z-50"
+        className="fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 z-50 sm:bottom-6 sm:right-6"
       >
         {isOpen ? "✕" : "Chat"}
       </button>
 
     
       <div
-        className={`fixed bottom-20 right-6 w-72 bg-white shadow-xl rounded-lg overflow-hidden transform transition-transform z-40
-        ${isOpen ? "translate-y-0" : "translate-y-96"}`}
+        className={`fixed bottom-16 right-4 sm:bottom-20 sm:right-6 w-[90vw] max-w-xs sm:w-80 bg-white shadow-xl rounded-xl flex flex-col transition-all duration-300 z-40
+          ${
+            isOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 translate-y-96 pointer-events-none"
+          }
+        `}
       >
-       
-        <div className="p-3 bg-blue-500 text-white font-bold text-lg">Assistant</div>
+    
+        <div className="p-3 bg-blue-500 text-white font-bold text-lg rounded-t-xl">
+        Markdarshan
+        </div>
 
-        <div className="max-h-64 p-3 overflow-y-auto flex flex-col gap-2">
+        <div className="max-h-64 sm:max-h-72 p-3 overflow-y-auto flex flex-col gap-2">
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`p-2 rounded-lg max-w-[75%] ${
+              className={`p-2 rounded-lg max-w-[75%] break-words whitespace-pre-wrap ${
                 msg.sender === "user"
                   ? "bg-blue-500 text-white self-end"
                   : "bg-gray-200 text-black self-start"
@@ -90,26 +106,26 @@ const SidebarChat = () => {
           <div ref={messagesEndRef} />
         </div>
 
-     
         <div className="p-3 flex gap-2 border-t">
           <input
             type="text"
             placeholder="Type a message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="flex-1 border px-2 py-1 rounded focus:outline-none"
+            className="flex-1 border px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
           <button
             onClick={handleSend}
-            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition"
           >
             Send
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default SidebarChat;
+

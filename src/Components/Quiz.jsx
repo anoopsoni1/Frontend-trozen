@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setMarks } from "../Slice/marks.slice.jsx"
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 function shuffleArray(array) {
@@ -59,7 +60,7 @@ const user = useSelector((state) => state.user.userData);
   <nav className="flex justify-between items-center mx-auto p-4">
   <div className="flex place-items-center">
     <img src="./Logo.png" alt="" height={50} width={50} />
-    <h1 className="text-2xl font-bold text-blue-600">Saksham Vidya</h1>
+    <Link to="/" className="text-2xl font-bold text-blue-600">Saksham Vidya</Link>
   </div>
   <div className="space-x-3 flex">
     {user ? (

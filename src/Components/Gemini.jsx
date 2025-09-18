@@ -2,11 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Brain, Code2, Cloud, Github } from "lucide-react";
 
 export default function CareerRecommendation() {
   const marks = useSelector((state) => state.marks);
  console.log("Redux Marks:", marks);
 
+ const user = useSelector((state) => state.user.userData);
   const savedScores = JSON.parse(localStorage.getItem("quizScores") || "{}");
 
   const [formData, setFormData] = useState({
@@ -15,6 +18,10 @@ export default function CareerRecommendation() {
     Commerce: savedScores.commerce || 0,
     Arts: savedScores.arts || 0,
   });
+
+const an =
+  [ 
+    {name : "Biology" , mark : savedScores.Bio} ,{ name : "Mathematics" , mark : savedScores.maths} ,{name : "Commerce" , mark :savedScores.commerce},{name :  "Arts" ,mark : savedScores.arts}]
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -51,6 +58,23 @@ export default function CareerRecommendation() {
   }
 
   return (
+    <>
+  <nav className="flex justify-between items-center mx-auto p-4">
+        <div className="flex place-items-center ">
+        
+          <h1 className="text-2xl font-bold text-blue-600">Saksham Vidya</h1>
+        </div>
+        <ul className=" space-x-6 text-gray-900">
+          <Link to="./dashboard">
+            <img src={user.image} height={50} width={50} alt="" />
+          </Link>
+        </ul>
+      </nav>
+
+
+
+
+
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 p-6">
       <div className="bg-white p-6 rounded-2xl shadow-lg max-w-lg w-full">
         <h1 className="text-2xl font-bold text-center text-blue-600 mb-4">
@@ -58,12 +82,12 @@ export default function CareerRecommendation() {
         </h1>
 
         <form className="grid gap-4" onSubmit={handleSubmit}>
-          {["Biology", "Mathematics", "Commerce", "Arts"].map((subject) => (
+          {an.map((subject) => (
             <input
               key={subject}
               type="number"
               name={subject}
-              placeholder={`${subject} Marks`}
+              placeholder={`${subject.name} : ${subject.mark}`}
               value={formData[subject]}
               onChange={handleChange}
               className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -123,5 +147,6 @@ export default function CareerRecommendation() {
       </div>
       <Link to="/dashboard" className="p-2 bg-black text-white rounded-2xl">Confirm</Link>
     </div>
+    </>
   );
 }
