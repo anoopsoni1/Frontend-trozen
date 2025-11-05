@@ -10,6 +10,7 @@ function Home() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const user = useSelector((state) => state.user.userData);
+  console.log(user)
 
   const features = [
     { id: 1, title: t("features.f1.title"), desc: t("features.f1.desc"), color: "bg-blue-100 text-blue-600", icons: <FaFlask size={24} className="text-blue-500" /> },
@@ -48,14 +49,14 @@ function Home() {
         </div>
         <ul className="hidden md:flex space-x-6 text-gray-900">
           <li>{t("nav.home")}</li>
-          {user ? <Link to="/quiz">{t("nav.quiz")}</Link> : <Link to="/login">{t("nav.quiz")}</Link>}
-          <li>{t("nav.paths")}</li>
-          <Link to="/collages">{t("nav.colleges")}</Link>
+          {user?.Class === 10 ? <Link to="/quiz">{t("nav.quiz")}</Link> : <Link to="/quiz2">{t("nav.quiz")}</Link>}
+          <Link to="/career">{t("nav.paths")}</Link>
+          <Link to="/collage">{t("nav.colleges")}</Link>
           <Link to="/dashboard">{t("nav.dashboard")}</Link>
         </ul>
         <div className="space-x-3 flex">
           {user ? (
-            <img src={user.image} className="rounded-[30px] bg-amber-400 border-2 border-b-black" height={50} width={50} alt="User" />
+          <Link to="/dashboard">  <img src={user.image} className="rounded-[30px] bg-amber-400 border-2 border-b-black" height={40} width={40} alt="User"  /> </Link>
           ) : (
             <Link to="/login" className="bg-blue-500 text-white sm:px-4 sm:py-2 px-2 py-1 rounded-xl hover:bg-blue-700">
               {t("nav.getstarted")}
@@ -179,7 +180,7 @@ function Home() {
               <li><a href="#">{t("footer.platform.assessment")}</a></li>
               <li><a href="#">{t("footer.platform.career")}</a></li>
               <li><a href="#">{t("footer.platform.college")}</a></li>
-              <li><a href="#">{t("footer.platform.dashboard")}</a></li>
+              <Link to="/dashboard">{t("footer.platform.dashboard")}</Link>
             </ul>
           </div>
           <div>

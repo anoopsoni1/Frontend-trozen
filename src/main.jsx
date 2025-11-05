@@ -12,6 +12,9 @@ import Dashboard from './Components/Dashboard.jsx'
 import CollegeQuiz from './Components/Quiz.jsx'
 import CareerRecommendation from './Components/Gemini.jsx'
 import SidebarChat from './Components/Sidebar.jsx'
+import CareerPathSinglePage from './Components/Carrerpath.jsx'
+import CareerOptionsAfter10th from './Components/Careeropt10.jsx'
+import CollegeQuiz2 from './Components/Quiz2.jsx'
 
 const route = createBrowserRouter([
 {
@@ -30,7 +33,7 @@ children : [
     element : <Signup />
   } ,
   {
-    path: "/collages" ,
+    path: "/collagedata" ,
     element : <CollegeTable />
   } ,
   {
@@ -48,7 +51,20 @@ children : [
   {
     path : "/sidebarchat",
     element : <SidebarChat />
-  }
+  },
+  {
+    path : "/career" ,
+    element : <CareerPathSinglePage />
+  } ,
+  {
+    path : "/carre" ,
+    element : <CareerOptionsAfter10th />
+  } ,
+  {
+    path : "quiz2" ,
+    element : <CollegeQuiz2 />
+  } 
+ 
 ]
 }
 
